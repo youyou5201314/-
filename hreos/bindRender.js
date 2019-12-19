@@ -8,6 +8,9 @@ function bindRender(req, res) {
         let str = template(path.join(__dirname, './views/' + filename + '.html'), obj)
         res.end(str);
     }
+    res.json = function (obj) {
+        this.end(JSON.stringify(obj))
+    }
 }
 // 第三步 暴露方法给外部使用
 module.exports = bindRender;

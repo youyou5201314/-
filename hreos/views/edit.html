@@ -47,6 +47,22 @@
   </div>
   <script src="/node_modules/jquery/dist/jquery.js"></script>
 </body>
+<script>
+  $(function () {
+    $('.btn-success').on('click', function (e) {
+      $ajax({
+        type: 'post',
+        url: '/editHeroInfo',
+        data: $('#form').serialize(),
+        dataType: 'json',
+        success: function (res) {
+          if (res.code == 200) {
+            window.location.href = './index.html';
+          }
+        }
+      })
+    })
+  })
+</script>
 
 </html>
-
