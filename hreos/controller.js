@@ -2,8 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const querystring = require('querystring')
+let bindRender = require('./bindRender')
 let heroData = require('./modelData');
-let bindRender = require('./modelData')
 // 处理方法
 // 因为需要很多方法来处理 所以暴露也需要很多方法
 // 使用对象来暴露方法 将暴露方法放在对象中
@@ -76,7 +76,7 @@ module.exports = {
         req.on('data', chunk => {
             str += chunk;
         })
-        req.on('add', () => {
+        req.on('end', () => {
             let editHero = querystring.parse(str)
             // 调用数据层中的方法来对数据做进一步操作
             heroData.editHeroInfo(editHero, (result) => {
@@ -95,6 +95,8 @@ module.exports = {
     deleteHeroInfo(req, res) {
         let { id } = req.query;
         heroData.deleteHeroInfo(id, result => {
+            console.log(result);
+            
             if (result) return res.end(JSON.stringify({
                 code: 200,
                 msg: '删除成功',

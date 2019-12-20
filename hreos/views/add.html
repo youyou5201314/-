@@ -45,16 +45,17 @@
 <script src="/node_modules/jquery/dist/jquery.js"></script>
 <script>
   $(function () {
-    $('btn-success').on('click', function (e) {
+    $('.btn-success').on('click', function (e) {
       // 阻止默认行为
       e.preventDefault();
       $.ajax({
         type: 'post',
-        url: './addHeroInfo',
+        url: '/addHeroInfo',
         data: $('#form').serialize(),
         dataType: 'json',
         success: function (res) {
           if (res.code == 200) {
+         console.log(res);
             window.location.href = './index.html'
           }
         }

@@ -21,12 +21,12 @@ function router(req, res) {
         Ctrl.showEditPage(req, res)
     } else if (method == 'GET' && pathname == '/info.html') {
         Ctrl.showInfoPage(req, res)
-    } else if (method == 'POST' && pathname == 'addHerInfo') {
-        Ctrl.addHeroInfo(req.res)
+    } else if (method == 'POST' && pathname == '/addHeroInfo') {
+        Ctrl.addHeroInfo(req, res)
     } else if (method == 'POST' && pathname == '/editHeroInfo') {
-        Ctrl.editHeroInfo(req.res)
+        Ctrl.editHeroInfo(req, res)
     } else if (method == 'GET' && pathname == '/deleteHeroInfo') {
-        Ctrl.deleteHeroInfo(req.res)
+        Ctrl.deleteHeroInfo(req, res)
     } else if (method == 'GET' && pathname.startsWith('/node_modules')) {
         Ctrl.loadStaticResource(req, res)
     } else {

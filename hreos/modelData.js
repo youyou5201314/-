@@ -31,12 +31,12 @@ module.exports = {
             if (err) return callback(false)
             let heroArr = JSON.parse(data)
             // 添加的数据没有id,没有data
-            hero.data = moment().format('YYY-MM-DD HH:mm:ss')//添加英雄时间
+            hero.data = moment().format('YYYY-MM-DD HH:mm:ss')//添加英雄时间
             hero.id = (+heroArr[heroArr.length - 1].id + 1).toString();
             heroArr.push(hero)
             // 将这个写回JSON中
-            fs.watchFile(path.join(__dirname, './heros.json'), JSON.stringify(heroArr), err => {
-                if (arr) return callback(false)
+            fs.writeFile(path.join(__dirname, './heros.json'), JSON.stringify(heroArr), err => {
+                if (err) return callback(false)
                 callback(true)
             })
         })
@@ -57,7 +57,7 @@ module.exports = {
                 }
             })
             // 将新的数据写回到JSON中
-            fs.watchFile(path.join(__dirname, './heros.json'), JSON.stringify(heroArr), err => {
+            fs.writeFile(path.join(__dirname, './heros.json'), JSON.stringify(heroArr), err => {
                 if (err) return callback(false);
                 callback(true)
             })
@@ -69,11 +69,11 @@ module.exports = {
             if (err) return callback(false)
             let heroArr = JSON.parse(data);
             heroArr.some((item, index) => {
-                if (id === item, index) {
+                if (id === item.id) {
                     heroArr.splice(index, 1)
                 }
             })
-            fs.watchFile(path.join(__dirname, './heros.json').JSON.stringify(heroArr), err => {
+            fs.writeFile(path.join(__dirname, './heros.json'),JSON.stringify(heroArr), err => {
                 if (err) return callback(false)
                 callback(true)
             })

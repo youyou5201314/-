@@ -48,16 +48,17 @@
 <script src="/node_modules/jquery/dist/jquery.js"></script>
 <script>
   $(function () {
-    $('.btn-dal').on('click', function (e) {
+    $('.btn-del').on('click', function (e) {
       let id = $(this).data('id');
       $.ajax({
-        typoe: 'get',
+        type: 'get',
         url: '/deleteHeroInfo',
-        datatype: 'json',
+        dataType: 'json',
         data: {
           id: id,
         },
         success: function (res) {
+          // console.log( typeof res);
           if (res.code == 200) {
             window.location.reload();
           }
