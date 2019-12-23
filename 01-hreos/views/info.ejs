@@ -1,0 +1,34 @@
+<%- include('./layout/header.ejs')%>
+  <div class="container hero-list">
+    
+  </div>
+  <%- include('./layout/footer.ejs')%>
+
+
+  <script type="text/html" id="oneHero">
+    <p><strong>Id:</strong>{{id}}</p>
+    <p><strong>姓名:</strong>{{name}}</p>
+    <p><strong>性别:</strong>{{gender}}</p>
+    <p><strong>年龄:</strong>{{age}}</p>
+    <p><strong>地址:</strong>{{address}}</p>
+    <p><strong>添加时间:</strong>{{ctime}}</p>
+  </script>
+
+  <script>
+    $(function() {
+      $.ajax({
+        type: 'get',
+        url: '/getOneHero',
+        data: {
+          id: location.search.split('=')[1]
+        },
+        success: function(res) {
+          // console.log(res);
+          if(res.code == 200) {
+            let htmlStr = template('oneHero',res.data[0])
+            $('.hero-list').html(htmlStr)
+          }
+        }
+      })
+    })
+  </script>

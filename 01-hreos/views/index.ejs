@@ -1,0 +1,85 @@
+<%- include('./layout/header.ejs')%>
+<div class="container hero-list">
+  <a class="btn btn-success pull-right" href="/add">添加英雄</a>
+  <table class="table table-hover">
+    <thead>
+      <th>编号</th>
+      <th>名称</th>
+      <th>性别</th>
+      <th>年龄</th>
+      <th>地址</th>
+      <th>创建时间</th>
+      <th>操作</th>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+</div>
+<%- include('./layout/footer.ejs')%>
+
+
+<script type="text/html" id="heroList">
+  {{each data}}
+    <tr>
+      <td>{{$index+1}}</td>
+      <td>{{$value.name}}</td>
+      <td>{{$value.gender}}</td>
+      <td>{{$value.age}}</td>
+      <td>{{$value.address}}</td>
+      <td>{{$value.ctime}}</td>
+      <td>
+        <a href="/info?id={{$value.id}}">查看</a>
+        <a href="/edit?id={{$value.id}}">编辑</a>
+        <a href="javascript: ;" class='btn-del' data-id="{{$value.id}}">删除</a>
+      </td>
+    </tr>
+  {{/each}}
+</script>
+<script>
+  $(function () {
+    load();
+    function load() {
+      $.ajax({
+        type: 'get',
+        url: '/getAllHeroInfo',
+        success: function (res) {
+          // console.log(res);
+          let htmlStr = template('heroList', res)
+          $('tbody').html(htmlStr)
+        }
+      })
+    }
+
+
+
+    //在前端页面通过模板引擎渲染出来的页面，相当就是动态生成的元素
+    //动态生成的元素能直接注册事件吗？ 不能
+    //对于动态生成的元素，我们需要使用委托类注册事件
+    // $('.btn-del').on('click',function(e) {
+    //   e.preventDefault();
+    //   console.log(1111);
+    // })
+
+    // 对于数据量特别的大的这样的情况，使用前端渲染
+    $('tbody').on('click', '.btn-del', function (e) {
+      e.preventDefault();
+      if (confirm('您确定要删除吗？')) {
+        $.ajax({
+          type: 'get',
+          url: '/deleteOneHero',
+          data: {
+            id: $(this).data('id')
+          },
+          success: function (res) {
+            // console.log(res);
+            if (res.code == 200) {
+              load();
+            }
+          }
+        })
+      }
+    })
+
+  })
+</script>
